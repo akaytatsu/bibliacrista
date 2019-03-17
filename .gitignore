@@ -301,3 +301,24 @@ Temporary Items
 .history
 
 # End of https://www.gitignore.io/api/macos,django,python,jetbrains,visualstudiocode
+
+
+# Created by https://www.gitignore.io/api/vue,vuejs
+# Edit at https://www.gitignore.io/?templates=vue,vuejs
+
+### Vue ###
+# gitignore template for Vue.js projects
+#
+# Recommended template: Node.gitignore
+
+# TODO: where does this rule come from?
+docs/_book
+
+# TODO: where does this rule come from?
+test/
+
+### Vuejs ###
+node_modules
+.DS_Store
+
+# End of https://www.gitignore.io/api/vue,vuejs

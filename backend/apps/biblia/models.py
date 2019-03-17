@@ -1,4 +1,6 @@
 from django.db import models
+from library.django_fulltext_search import SearchManager
+
 
 class Testamentos(models.Model):
     tes_id = models.AutoField(primary_key=True)
@@ -25,6 +27,10 @@ class Livros(models.Model):
         unique_together = (('liv_tes', 'liv_posicao'),)
         
 class Versiculos(models.Model):
+
+    objects    = SearchManager(['ver_texto',])
+
+
     ver_id = models.AutoField(primary_key=True)
     ver_vrs = models.ForeignKey("biblia.Versoes", verbose_name=u"Versão", on_delete=models.CASCADE)
     ver_liv = models.ForeignKey("biblia.Livros", verbose_name=u"Livros", on_delete=models.CASCADE)
