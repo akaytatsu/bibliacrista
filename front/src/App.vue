@@ -3,7 +3,7 @@
     <Menu></Menu>
     <Header></Header>
     <div class="container">
-      <router-view/>
+      <router-view :key="$route.fullPath"/>
     </div>
   </div>
 </template>

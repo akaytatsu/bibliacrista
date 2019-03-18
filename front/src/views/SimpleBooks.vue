@@ -17,7 +17,11 @@
                     
                     <div class="row">
                         <div class="col-sm-4">
-                            <p v-for="book in organized_books.old_1">{{ book.liv_nome }}</p> 
+                            <p v-for="book in organized_books.old_1" v-bind:key="book.liv_id">
+                              <router-link :to="{ name: 'Versicle', query: { livro_id: book.liv_id } }">
+                                {{ book.liv_nome }}
+                              </router-link>
+                            </p> 
                         </div>
                         <div class="col-sm-4">
                             <p v-for="book in organized_books.old_2">{{ book.liv_nome }}</p> 

@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_filters',
     'corsheaders',
 
     # apps
@@ -133,3 +134,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 CORS_ORIGIN_ALLOW_ALL = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'library.utils.CustomResultsSetPagination',
+    'COERCE_DECIMAL_TO_STRING': False,
+}
+
+DEFAULT_PAGINATION_CLASS = 'library.utils.CustomResultsSetPagination',
+PAGE_SIZE = 5

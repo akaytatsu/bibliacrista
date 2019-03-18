@@ -18,3 +18,16 @@ class SimplePaginator():
         serializer = serializer_instance(queryset, many=True)
 
         return Response(serializer.data)
+
+class CustomResultsSetPagination(LimitOffsetPagination):
+    default_limit = 40
+    max_limit = 120
+
+    def get_paginated_response(self, data):
+        return Response({
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
+            'count': self.count,
+            'limit': self.limit,
+            'results': data
+        })

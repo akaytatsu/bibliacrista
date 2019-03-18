@@ -11,3 +11,4 @@ django-cors-headers
 tqdm
 colorama
 Unidecode==1.0.23
+django-filter
