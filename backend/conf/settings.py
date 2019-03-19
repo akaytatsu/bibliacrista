@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # apps
-    'apps.biblia',
+    'apps.bible',
     'apps.api',
 ]
 
