@@ -8,8 +8,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from library.utils import SimplePaginator
 from django.conf import settings
-from .serializers import VersiculosSerializer, BooksSerializer
-from .models import Versiculos, Livros
+from .serializers import VersiculosSerializer, BooksSerializer, VersoesSerializer
+from .models import Versiculos, Livros, Versoes
 import requests
 import json
 from .filters import LivrosFilter, VersiculoFilter
@@ -37,9 +37,18 @@ class BibliaViewSet(viewsets.GenericViewSet, SimplePaginator):
     @action(methods=['get'], detail=False, permission_classes=[AllowAny])
     def capitulos_livro(self, request):
         
-        versao = request.data.get("versao_id", 1)
-        livro = request.data.get("livro_id", 1)
+        versao = request.GET.get("versao_id", 1)
+        livro = request.GET.get("livro_id", 1)
 
-        total = Versiculos.objects.values("ver_capitulo").filter(ver_liv_id=livro, ver_vrs_id=versao).distinct()
+        capitulos = Versiculos.objects.values("ver_capitulo").filter(ver_liv_id=livro, ver_vrs_id=versao).distinct()
 
-        return Response({"total": len(total)}, status=status.HTTP_200_OK)
+        return Response(capitulos, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=False, permission_classes=[AllowAny])
+    def get_versoes(self, request):
+
+        qry = Versoes.objects.all()
+
+        response = VersoesSerializer(qry, many=True).data
+
+        return Response(response, status=status.HTTP_200_OK)

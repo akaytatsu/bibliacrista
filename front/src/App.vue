@@ -3,7 +3,7 @@
     <Menu></Menu>
     <Header></Header>
     <div class="container">
-      <router-view :key="$route.fullPath"/>
+      <router-view :key="$route.fullPath" />
     </div>
   </div>
 </template>
@@ -15,12 +15,10 @@ import Header from "./components/Header.vue";
 export default {
   components: {
     Menu,
-    Header,
+    Header
   },
-  mounted(){
+  mounted() {
     window.TEMPLATE_START();
   }
 };
 </script>
-
-

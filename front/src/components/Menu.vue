@@ -2,9 +2,9 @@
   <div>
     <div class="fixed-sidebar">
       <div class="fixed-sidebar-left sidebar--small" id="sidebar-left">
-        <a href="02-ProfilePage.html" class="logo">
-          <img src="/img/logo.png" alt="Olympus">
-        </a>
+        <router-link :to="{ name: 'SimpleBooks' }" class="logo">
+          <img src="/img/logo.png" alt="Olympus" />
+        </router-link>
 
         <div class="mCustomScrollbar" data-mcs-theme="dark">
           <ul class="left-menu">
@@ -40,7 +40,7 @@
 
       <div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1">
         <a href="02-ProfilePage.html" class="logo">
-          <img src="/img/logo.png" alt="Olympus">
+          <img src="/img/logo.png" alt="Olympus" />
           <h6 class="logo-title">olympus</h6>
         </a>
 
@@ -76,15 +76,21 @@
     <!-- ... end Fixed Sidebar Left -->
     <!-- Fixed Sidebar Left -->
     <div class="fixed-sidebar fixed-sidebar-responsive">
-      <div class="fixed-sidebar-left sidebar--small" id="sidebar-left-responsive">
+      <div
+        class="fixed-sidebar-left sidebar--small"
+        id="sidebar-left-responsive"
+      >
         <a href="#" class="logo js-sidebar-open">
-          <img src="/img/logo.png" alt="Olympus">
+          <img src="/img/logo.png" alt="Olympus" />
         </a>
       </div>
 
-      <div class="fixed-sidebar-left sidebar--large" id="sidebar-left-1-responsive">
+      <div
+        class="fixed-sidebar-left sidebar--large"
+        id="sidebar-left-1-responsive"
+      >
         <a href="#" class="logo">
-          <img src="/img/logo.png" alt="Olympus">
+          <img src="/img/logo.png" alt="Olympus" />
           <h6 class="logo-title">olympus</h6>
         </a>
 
@@ -92,13 +98,16 @@
           <div class="control-block">
             <div class="author-page author vcard inline-items">
               <div class="author-thumb">
-                <img alt="author" src="/img/author-page.jpg" class="avatar">
+                <img alt="author" src="/img/author-page.jpg" class="avatar" />
                 <span class="icon-status online"></span>
               </div>
               <a href="02-ProfilePage.html" class="author-name fn">
-                <div class="author-title">James Spiegel
+                <div class="author-title">
+                  James Spiegel
                   <svg class="olymp-dropdown-arrow-icon">
-                    <use xlink:href="icons/icons.svg#olymp-dropdown-arrow-icon"></use>
+                    <use
+                      xlink:href="icons/icons.svg#olymp-dropdown-arrow-icon"
+                    ></use>
                   </svg>
                 </div>
                 <span class="author-subtitle">SPACE COWBOY</span>
@@ -145,7 +154,7 @@
                 <svg class="olymp-menu-icon">
                   <use xlink:href="icons/icons.svg#olymp-menu-icon"></use>
                 </svg>
-                
+
                 <span>Profile Settings</span>
               </a>
             </li>
@@ -160,7 +169,7 @@
                 >
                   <use xlink:href="icons/icons.svg#olymp-star-icon"></use>
                 </svg>
-                
+
                 <span>Create Fav Page</span>
               </a>
             </li>
@@ -169,7 +178,7 @@
                 <svg class="olymp-logout-icon">
                   <use xlink:href="icons/icons.svg#olymp-logout-icon"></use>
                 </svg>
-                
+
                 <span>Log Out</span>
               </a>
             </li>

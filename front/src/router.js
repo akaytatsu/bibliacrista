@@ -16,7 +16,6 @@ export default new Router({
       path: "/versicle",
       name: "Versicle",
       component: Versicle
-    },
-
+    }
   ]
 });
