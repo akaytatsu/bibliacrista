@@ -8,7 +8,7 @@ Vue.use(VueResource);
 
 Vue.config.productionTip = false;
 
-Vue.http.options.root = "http://localhost:8000/biblia/";
+Vue.http.options.root = "http://localhost:8000/bible/";
 
 new Vue({
   router,

@@ -13,8 +13,8 @@
           >
             <div
               class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-xs-12 sorting-item ecommerce natural"
-              v-for="ver in versiculos"
-              v-bind:key="ver.ver_id"
+              v-for="ver in versicles"
+              v-bind:key="ver.id"
             >
               <div class="ui-block">
                 <article class="hentry post">
@@ -24,38 +24,38 @@
                         :to="{
                           name: 'Versicle',
                           query: get_query_params(
-                            { livro_id: ver.ver_liv.liv_id },
+                            { book_id: ver.book.id },
                             false
                           )
                         }"
-                        >{{ ver.ver_liv.liv_nome }}</router-link
+                        >{{ ver.book.name }}</router-link
                       >&nbsp;
                       <router-link
                         :to="{
                           name: 'Versicle',
                           query: get_query_params(
                             {
-                              livro_id: ver.ver_liv.liv_id,
-                              capitulo: ver.ver_capitulo
+                              book_id: ver.book.id,
+                              chapter: ver.chapter
                             },
                             false
                           )
                         }"
-                        >{{ ver.ver_capitulo }}</router-link
+                        >{{ ver.chapter }}</router-link
                       >&nbsp;:&nbsp;
                       <router-link
                         :to="{
                           name: 'Versicle',
                           query: get_query_params(
                             {
-                              livro_id: ver.ver_liv.liv_id,
-                              capitulo: ver.ver_capitulo,
-                              versiculo: ver.ver_versiculo
+                              book_id: ver.book.id,
+                              chapter: ver.chapter,
+                              versicle: ver.versicle
                             },
                             false
                           )
                         }"
-                        >{{ ver.ver_versiculo }}</router-link
+                        >{{ ver.versicle }}</router-link
                       >
                     </div>
 
@@ -67,36 +67,36 @@
                       </svg>
                       <ul class="more-dropdown">
                         <li
-                          v-for="versao in versoes"
-                          v-bind:key="versao.vrs_id"
+                          v-for="version in versions"
+                          v-bind:key="version.id"
                         >
                           <router-link
                             :to="{
                               name: 'Versicle',
                               query: get_query_params(
-                                { versao_id: versao.vrs_id },
+                                { version_id: version.id },
                                 false
                               )
                             }"
-                            >{{ versao.vrs_nome }}</router-link
+                            >{{ version.name }}</router-link
                           >
                         </li>
                       </ul>
                     </div>
                   </div>
 
-                  <p>{{ ver.ver_texto }}</p>
+                  <p>{{ ver.text }}</p>
 
                   <div class="post-additional-info inline-items">
                     <div class="names-people-likes">
-                      {{ ver.ver_vrs.vrs_nome }}
+                      {{ ver.version.name }}
                     </div>
 
                     <div class="comments-shared">
-                        <a href="#" class="post-add-icon inline-items" data-toggle="modal" data-target="#dicionario_modal"
-                          v-on:click="get_dictionary(ver.dicionario)">
+                        <a href="#" class="post-add-icon inline-items" data-toggle="modal" data-target="#dictionary_modal"
+                          v-on:click="get_dictionary(ver.dictionary)">
                           <svg class="olymp-speech-balloon-icon"><use xlink:href="icons/icons.svg#olymp-speech-balloon-icon"></use></svg>
-                          <span>{{ ver.dicionario.length }}</span>
+                          <span>{{ ver.dictionary.length }}</span>
                         </a>
 
                         <!-- <a href="#" class="post-add-icon inline-items">
@@ -140,7 +140,7 @@
     </div>
 
     <!-- Window-popup Edit Widget Profile -->
-    <div class="modal fade" id="dicionario_modal">
+    <div class="modal fade" id="dictionary_modal">
       <div class="modal-dialog ui-block window-popup edit-widget edit-widget-profile">
         <a href="#" class="close icon-close" data-dismiss="modal" aria-label="Close">
           <svg class="olymp-close-icon"><use xlink:href="icons/icons.svg#olymp-close-icon"></use></svg>
@@ -150,7 +150,7 @@
           <h6 class="title">Dicionario</h6>
         </div>
 
-        <div v-for="dic in dicionario" v-bind:key="dic.id">
+        <div v-for="dic in dictionary" v-bind:key="dic.id">
           
           <div class="ui-block-title ui-block-title">
             <h6 class="title">{{ dic.palavra }}</h6>
@@ -176,14 +176,14 @@ export default {
   name: "Versicle",
   data() {
     return {
-      versiculos: {},
-      versoes: [],
-      dicionario: [],
+      versicles: {},
+      versions: [],
+      dictionary: [],
     };
   },
   components: {},
   mounted() {
-    this.get_versoes();
+    this.get_versions();
     this.get_versicles();
   },
   methods: {
@@ -215,20 +215,20 @@ export default {
       return params;
     },
     get_dictionary(dict){
-      this.$http.post("get_dicionario/", dict, {header: {'Content-Type': 'application/json'}}).then(
+      this.$http.post("get_dictionary/", dict, {header: {'Content-Type': 'application/json'}}).then(
         response => {
-          this.dicionario = response.body;
+          this.dictionary = response.body;
         },
         () => {
           // error callback
         }
       );
     },
-    get_versoes() {
-      this.$http.get("get_versoes").then(
+    get_versions() {
+      this.$http.get("get_versions").then(
         response => {
           // get body data
-          this.versoes = response.body;
+          this.versions = response.body;
         },
         () => {
           // error callback
@@ -239,43 +239,43 @@ export default {
       var params = {};
 
       // Deffault
-      params["livro_id"] = 1;
-      params["versao_id"] = 5;
-      params["capitulo"] = 1;
+      params["book_id"] = 1;
+      params["version_id"] = 1;
+      params["chapter"] = 1;
       // params['vesiculo'] = 1
 
       if (
-        this.$route.query.livro_id != undefined &&
-        this.$route.query.livro_id != null
+        this.$route.query.id != undefined &&
+        this.$route.query.id != null
       ) {
-        params["livro_id"] = this.$route.query.livro_id;
+        params["book_id"] = this.$route.query.id;
       }
 
       if (
-        this.$route.query.versao_id != undefined &&
-        this.$route.query.versao_id != null
+        this.$route.query.version_id != undefined &&
+        this.$route.query.version_id != null
       ) {
-        params["versao_id"] = this.$route.query.versao_id;
+        params["version_id"] = this.$route.query.version_id;
       }
 
       if (
-        this.$route.query.versiculo != undefined &&
-        this.$route.query.versiculo != null
+        this.$route.query.versicle != undefined &&
+        this.$route.query.versicle != null
       ) {
-        params["versiculo"] = this.$route.query.versiculo;
+        params["versicle"] = this.$route.query.versicle;
       }
 
       if (
-        this.$route.query.capitulo != undefined &&
-        this.$route.query.capitulo != null
+        this.$route.query.chapter != undefined &&
+        this.$route.query.chapter != null
       ) {
-        params["capitulo"] = this.$route.query.capitulo;
+        params["chapter"] = this.$route.query.chapter;
       }
 
-      this.$http.get("versiculos", { params: params }).then(
+      this.$http.get("versicles", { params: params }).then(
         response => {
           // get body data
-          this.versiculos = response.body.results;
+          this.versicles = response.body.results;
         },
         () => {
           // error callback

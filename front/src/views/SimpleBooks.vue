@@ -20,45 +20,45 @@
                     <div class="col-sm-4">
                       <p
                         v-for="book in organized_books.old_1"
-                        v-bind:key="book.liv_id"
+                        v-bind:key="book.id"
                       >
                         <router-link
                           :to="{
                             name: 'Versicle',
-                            query: { livro_id: book.liv_id }
+                            query: { book_id: book.id }
                           }"
                         >
-                          {{ book.liv_nome }}
+                          {{ book.name }}
                         </router-link>
                       </p>
                     </div>
                     <div class="col-sm-4">
                       <p
                         v-for="book in organized_books.old_2"
-                        v-bind:key="book.liv_id"
+                        v-bind:key="book.id"
                       >
                         <router-link
                           :to="{
                             name: 'Versicle',
-                            query: { livro_id: book.liv_id }
+                            query: { book_id: book.id }
                           }"
                         >
-                          {{ book.liv_nome }}
+                          {{ book.name }}
                         </router-link>
                       </p>
                     </div>
                     <div class="col-sm-4">
                       <p
                         v-for="book in organized_books.old_3"
-                        v-bind:key="book.liv_id"
+                        v-bind:key="book.id"
                       >
                         <router-link
                           :to="{
                             name: 'Versicle',
-                            query: { livro_id: book.liv_id }
+                            query: { book_id: book.id }
                           }"
                         >
-                          {{ book.liv_nome }}
+                          {{ book.name }}
                         </router-link>
                       </p>
                     </div>
@@ -78,30 +78,30 @@
                     <div class="col-sm-6">
                       <p
                         v-for="book in organized_books.new_1"
-                        v-bind:key="book.liv_id"
+                        v-bind:key="book.id"
                       >
                         <router-link
                           :to="{
                             name: 'Versicle',
-                            query: { livro_id: book.liv_id }
+                            query: { book_id: book.id }
                           }"
                         >
-                          {{ book.liv_nome }}
+                          {{ book.name }}
                         </router-link>
                       </p>
                     </div>
                     <div class="col-sm-6">
                       <p
                         v-for="book in organized_books.new_2"
-                        v-bind:key="book.liv_id"
+                        v-bind:key="book.id"
                       >
                         <router-link
                           :to="{
                             name: 'Versicle',
-                            query: { livro_id: book.liv_id }
+                            query: { book_id: book.id }
                           }"
                         >
-                          {{ book.liv_nome }}
+                          {{ book.name }}
                         </router-link>
                       </p>
                     </div>
@@ -150,7 +150,7 @@ export default {
     },
     organize_books() {
       for (var i = 0; i < this.books.length; i++) {
-        if (this.books[i].liv_tes == 1) {
+        if (this.books[i].testament == 1) {
           if (this.organized_books.old_1.length < 13) {
             this.organized_books.old_1.push(this.books[i]);
           } else if (this.organized_books.old_2.length < 13) {

@@ -1,13 +1,13 @@
 <template>
     <div>
-        <ul class="cat-list-bg-style align-center sorting-menu" v-if="livro_id > 0">
-            <li class="cat-list__item active" v-for="cap in capitulos" v-bind:key="cap.ver_capitulo">
+        <ul class="cat-list-bg-style align-center sorting-menu" v-if="book_id > 0">
+            <li class="cat-list__item active" v-for="cap in chapters" v-bind:key="cap.chapter">
               <router-link
                 :to="{
                   name: 'Versicle',
-                  query: get_query_params({ capitulo: cap.ver_capitulo }, false, ['versiculo'])
+                  query: get_query_params({ chapter: cap.chapter }, false, ['versicle'])
                 }">
-                  {{ ("" + cap.ver_capitulo).padStart(2, "0") }}
+                  {{ ("" + cap.chapter).padStart(2, "0") }}
                 </router-link>
             </li>
           </ul>
@@ -19,8 +19,8 @@ export default {
     name: "Chapters",
     data(){
         return{
-            livro_id: 0,
-            capitulos: [],
+            book_id: 0,
+            chapters: [],
         }
     },
     mounted(){
@@ -58,27 +58,27 @@ export default {
             var params = {};
             var book_id = this.$route.query;
 
-            params["versao_id"] = 5;
+            params["version_id"] = 1;
 
             if (
-                this.$route.query.versao_id != undefined &&
-                this.$route.query.versao_id != null
+                this.$route.query.version_id != undefined &&
+                this.$route.query.version_id != null
             ) {
-                params["versao_id"] = this.$route.query.versao_id;
+                params["version_id"] = this.$route.query.version_id;
             }
 
             if (
-                this.$route.query.livro_id != undefined &&
-                this.$route.query.livro_id != null
+                this.$route.query.id != undefined &&
+                this.$route.query.id != null
             ) {
-                this.livro_id = this.$route.query.livro_id;
+                this.id = this.$route.query.id;
 
-                params["livro_id"] = this.livro_id;
+                params["book_id"] = this.id;
 
-                this.$http.get("capitulos_livro", { params: params }).then(
+                this.$http.get("chapters_livro", { params: params }).then(
                     response => {
                     // get body data
-                    this.capitulos = response.body;
+                    this.chapters = response.body;
                     },
                     () => {
                     // error callback

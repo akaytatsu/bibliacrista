@@ -8,7 +8,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from library.utils import SimplePaginator
 from django.conf import settings
-from .serializers import VersicleSerializer, BooksSerializer, VersicleSerializer, DictionarySerializer
+from .serializers import VersicleSerializer, BooksSerializer, VersicleSerializer, DictionarySerializer, VersionSerializer
 from .models import Versicle, Book, Version, Dictionary
 import requests
 import json
@@ -32,6 +32,8 @@ class BibleViewSet(viewsets.GenericViewSet, SimplePaginator):
     def versicles(self, request):
         vers = VersicleFilter(request.GET, queryset=Versicle.objects.all())
 
+        print("*********")
+        print(vers.qs.query)
         return self.serializer_paginator(vers.qs, VersicleSerializer)
 
     @action(methods=['get'], detail=False, permission_classes=[AllowAny])
@@ -49,7 +51,7 @@ class BibleViewSet(viewsets.GenericViewSet, SimplePaginator):
 
         qry = Version.objects.all()
 
-        response = VersicleSerializer(qry, many=True).data
+        response = VersionSerializer(qry, many=True).data
 
         return Response(response, status=status.HTTP_200_OK)
 
