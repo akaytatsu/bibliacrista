@@ -8,8 +8,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from library.utils import SimplePaginator
 from django.conf import settings
-from .serializers import VersiculosSerializer, BooksSerializer, VersoesSerializer
-from .models import Versiculos, Livros, Versoes
+from .serializers import VersiculosSerializer, BooksSerializer, VersoesSerializer, DicionarioSerializer
+from .models import Versiculos, Livros, Versoes, Dicionario
 import requests
 import json
 from .filters import LivrosFilter, VersiculoFilter
@@ -50,5 +50,13 @@ class BibliaViewSet(viewsets.GenericViewSet, SimplePaginator):
         qry = Versoes.objects.all()
 
         response = VersoesSerializer(qry, many=True).data
+
+        return Response(response, status=status.HTTP_200_OK)
+
+    @action(methods=['post'], detail=False, permission_classes=[AllowAny])
+    def get_dicionario(self, request):
+        dics = request.data
+        qry = Dicionario.objects.filter(id__in=dics)
+        response = DicionarioSerializer(qry, many=True).data
 
         return Response(response, status=status.HTTP_200_OK)

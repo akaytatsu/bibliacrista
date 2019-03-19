@@ -37,6 +37,17 @@ class Versiculos(models.Model):
     ver_capitulo = models.PositiveIntegerField()
     ver_versiculo = models.PositiveIntegerField()
     ver_texto = models.TextField()
+    dicionario = models.ManyToManyField("biblia.Dicionario",)
 
     class Meta:
         db_table = 'versiculos'
+
+class Dicionario(models.Model):
+    palavra = models.CharField(max_length=70, null=False, blank=False)
+    significado = models.TextField(null=False, blank=False)
+
+    class Meta:
+        db_table = 'dicionario'
+
+    def __str__(self):
+        return self.palavra

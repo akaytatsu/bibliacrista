@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Versiculos, Livros, Versoes
+from .models import Versiculos, Livros, Versoes, Dicionario
 
 class VersoesSerializer(serializers.ModelSerializer):
 
@@ -26,4 +26,10 @@ class BooksSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Livros
+        fields = "__all__"
+
+class DicionarioSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Dicionario
         fields = "__all__"

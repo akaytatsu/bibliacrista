@@ -1,3 +1,7 @@
 from django.contrib import admin
+from apps.biblia.models import Dicionario
 
-# Register your models here.
+
+@admin.register(Dicionario)
+class DicionarioAdmin(admin.ModelAdmin):
+    pass
