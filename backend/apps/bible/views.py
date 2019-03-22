@@ -20,6 +20,7 @@ class BibleViewSet(viewsets.GenericViewSet, SimplePaginator):
     serializer_class = VersicleSerializer
     permission_classes = [ AllowAny ]
     parser_classes = ( MultiPartParser, FormParser, JSONParser)
+    queryset = ''
 
     # last inserted in DB (For home products)
     @action(methods=['get'], detail=False, permission_classes=[AllowAny])
@@ -31,9 +32,6 @@ class BibleViewSet(viewsets.GenericViewSet, SimplePaginator):
     @action(methods=['get'], detail=False, permission_classes=[AllowAny])
     def versicles(self, request):
         vers = VersicleFilter(request.GET, queryset=Versicle.objects.all())
-
-        print("*********")
-        print(vers.qs.query)
         return self.serializer_paginator(vers.qs, VersicleSerializer)
 
     @action(methods=['get'], detail=False, permission_classes=[AllowAny])
@@ -62,3 +60,8 @@ class BibleViewSet(viewsets.GenericViewSet, SimplePaginator):
         response = DictionarySerializer(qry, many=True).data
 
         return Response(response, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=False, permission_classes=[AllowAny])
+    def search(self, request):
+        vers = VersicleFilter(request.GET, queryset=Versicle.objects.order_by("book", "versicle", "chapter").all())
+        return self.serializer_paginator(vers.qs, VersicleSerializer)

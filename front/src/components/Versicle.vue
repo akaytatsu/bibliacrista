@@ -3,8 +3,6 @@
     <div class="row">
       <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div class="clients-grid">
-          
-
 
           <div
             class="row sorting-container"
@@ -21,13 +19,7 @@
                   <div class="post__author author vcard inline-items">
                     <div class="author-date">
                       <router-link
-                        :to="{
-                          name: 'Versicle',
-                          query: get_query_params(
-                            { book_id: ver.book.id },
-                            false
-                          )
-                        }"
+                        :to="{ name: 'Versicle', query: get_query_params( { book_id: ver.book.id }, false, ['search']) }"
                         >{{ ver.book.name }}</router-link
                       >&nbsp;
                       <router-link
@@ -37,10 +29,7 @@
                             {
                               book_id: ver.book.id,
                               chapter: ver.chapter
-                            },
-                            false
-                          )
-                        }"
+                            }, false, ['versicle', 'search']) }"
                         >{{ ver.chapter }}</router-link
                       >&nbsp;:&nbsp;
                       <router-link
@@ -52,7 +41,7 @@
                               chapter: ver.chapter,
                               versicle: ver.versicle
                             },
-                            false
+                            false, ['search']
                           )
                         }"
                         >{{ ver.versicle }}</router-link
@@ -75,7 +64,7 @@
                               name: 'Versicle',
                               query: get_query_params(
                                 { version_id: version.id },
-                                false
+                                false, ['search']
                               )
                             }"
                             >{{ version.name }}</router-link
@@ -139,6 +128,28 @@
       </div>
     </div>
 
+    <div class="row" v-if="pages > 1">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="clients-grid">
+          <nav aria-label="Page navigation example">
+            <paginate
+              :page="page"
+              :page-count="pages"
+              :container-class="'pagination justify-content-center'"
+              :prev-text="'Anterior'"
+              :next-text="'Proximo'"
+              :page-class="'page-item'"
+              :prev-class="'page-item'"
+              :page-link-class="'page-link'"
+              :prev-link-class="'page-link'"
+              :next-link-class="'page-link'"
+              :clickHandler="paginator_click"> 
+            </paginate>
+          </nav>
+        </div>
+      </div>
+    </div>
+
     <!-- Window-popup Edit Widget Profile -->
     <div class="modal fade" id="dictionary_modal">
       <div class="modal-dialog ui-block window-popup edit-widget edit-widget-profile">
@@ -179,6 +190,9 @@ export default {
       versicles: {},
       versions: [],
       dictionary: [],
+      page_count: 0,
+      pages: 0,
+      page: 1
     };
   },
   components: {},
@@ -187,6 +201,15 @@ export default {
     this.get_versicles();
   },
   methods: {
+    get_page(){
+      if (this.$route.query.page != undefined && this.$route.query.page != null) {
+        this.page = this.$route.query.page
+      }
+    },
+    paginator_click(page) {
+      this.page = page
+      this.get_versicles(this.page)
+    },
     isInArray(value, array) {
       return array.indexOf(value) > -1;
     },
@@ -235,47 +258,47 @@ export default {
         }
       );
     },
-    get_versicles() {
+    get_versicles(page=null) {
       var params = {};
 
       // Deffault
-      params["book_id"] = 1;
       params["version_id"] = 1;
-      params["chapter"] = 1;
-      // params['vesiculo'] = 1
 
-      if (
-        this.$route.query.id != undefined &&
-        this.$route.query.id != null
-      ) {
-        params["book_id"] = this.$route.query.id;
+      if (this.$route.query.search != undefined && this.$route.query.search != null) {
+        params["search"] = this.$route.query.search;
+
+        if(page != null){
+          params["page"] = page;
+        }
+
+      }else{
+        params["book_id"] = 1;
+        params["chapter"] = 1;
+
+        if (this.$route.query.book_id != undefined && this.$route.query.book_id != null) {
+          params["book_id"] = this.$route.query.book_id;
+        }
+
+        if ( this.$route.query.versicle != undefined && this.$route.query.versicle != null ) {
+          params["versicle"] = this.$route.query.versicle;
+        }
+
+        if (this.$route.query.chapter != undefined && this.$route.query.chapter != null ) {
+          params["chapter"] = this.$route.query.chapter;
+        }
+
       }
 
-      if (
-        this.$route.query.version_id != undefined &&
-        this.$route.query.version_id != null
-      ) {
+      if (this.$route.query.version_id != undefined && this.$route.query.version_id != null) {
         params["version_id"] = this.$route.query.version_id;
-      }
-
-      if (
-        this.$route.query.versicle != undefined &&
-        this.$route.query.versicle != null
-      ) {
-        params["versicle"] = this.$route.query.versicle;
-      }
-
-      if (
-        this.$route.query.chapter != undefined &&
-        this.$route.query.chapter != null
-      ) {
-        params["chapter"] = this.$route.query.chapter;
       }
 
       this.$http.get("versicles", { params: params }).then(
         response => {
           // get body data
           this.versicles = response.body.results;
+          this.pages = response.body.pages;
+          this.page_count = Math.ceil(response.body.count / response.body.limit)
         },
         () => {
           // error callback

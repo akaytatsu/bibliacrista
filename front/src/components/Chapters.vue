@@ -60,22 +60,16 @@ export default {
 
             params["version_id"] = 1;
 
-            if (
-                this.$route.query.version_id != undefined &&
-                this.$route.query.version_id != null
-            ) {
+            if (this.$route.query.version_id != undefined && this.$route.query.version_id != null ) {
                 params["version_id"] = this.$route.query.version_id;
             }
 
-            if (
-                this.$route.query.id != undefined &&
-                this.$route.query.id != null
-            ) {
-                this.id = this.$route.query.id;
+            if (this.$route.query.book_id != undefined && this.$route.query.book_id != null) {
+                this.book_id = this.$route.query.book_id;
 
-                params["book_id"] = this.id;
+                params["book_id"] = this.book_id;
 
-                this.$http.get("chapters_livro", { params: params }).then(
+                this.$http.get("book_chapters", { params: params }).then(
                     response => {
                     // get body data
                     this.chapters = response.body;

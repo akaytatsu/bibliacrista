@@ -12,6 +12,7 @@ class VersicleFilter(django_filters.FilterSet):
     chapter = django_filters.NumberFilter(field_name="chapter", )
     versicle = django_filters.NumberFilter(field_name="versicle", )
     text = django_filters.CharFilter(field_name="text", lookup_expr="icontains")
+    search = django_filters.CharFilter(field_name="text", lookup_expr="icontains")
 
     class Meta:
         model = Versicle

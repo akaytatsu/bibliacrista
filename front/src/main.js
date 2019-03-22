@@ -6,6 +6,9 @@ import "./registerServiceWorker";
 import VueResource from "vue-resource";
 Vue.use(VueResource);
 
+import Paginate from 'vuejs-paginate'
+Vue.component('paginate', Paginate)
+
 Vue.config.productionTip = false;
 
 Vue.http.options.root = "http://localhost:8000/bible/";

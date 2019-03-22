@@ -144,6 +144,3 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'library.utils.CustomResultsSetPagination',
     'COERCE_DECIMAL_TO_STRING': False,
 }
-
-DEFAULT_PAGINATION_CLASS = 'library.utils.CustomResultsSetPagination',
-PAGE_SIZE = 5
