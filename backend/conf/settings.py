@@ -92,6 +92,9 @@ DATABASES = {
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASS'),
+        'OPTIONS': {
+            'sql_mode': "STRICT_ALL_TABLES",
+        },
     }
 }
 
